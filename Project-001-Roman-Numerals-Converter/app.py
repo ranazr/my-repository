@@ -21,16 +21,20 @@ def convert(decimal_num):
 @app.route('/', methods=['POST', 'GET'])
 def main_post():
     if request.method == 'POST':
-        alpha = request.form['number']
+        alpha = str(request.form['number'])
         # I need to check two conditions. First If the number is decimal or not, second, If the number  less than 1 and greater than 3999. If the number has one of them, warning massage must raise. 
         # Regarding decimal control, If it has got at least one character which isn't decimal, warning  massage will raise. I am going to check it with isdecimal method. This method will return True,  if characters of alpha are decimal. On the other hand, If the number has at least one character  which is not decimal, it will return False. 
         if not alpha.isdecimal():
             return render_template('index.html', developer_name='Rana', not_valid=True)
         # Secondly, I need to check If the number is between 1 to 3999 or not. To do this, I need to    convert my number to integer. Don't forget, when I call the number from html file and assign it    to the variable within application, this variable is going to be string. Thats why I need to   convert it into integer. 
-        number = int(alpha)
-        if not 0 < number < 4000:
-            return render_template('index.html', developer_name='Rana', not_valid=True)
-        return render_template('result.html', number_decimal = number , number_roman= convert(number), developer_name='Rana')
+        else:
+            number = int(alpha)
+            if not 0 < number < 4000:
+                return render_template('index.html', developer_name='Rana', not_valid=True)
+            else:
+                roman_number = convert(number)
+                return render_template('result.html', number_decimal=number, number_roman=roman_number, developer_name='Rana')
+       
     else:
         # When user requests my web page, index.html will have to appear without "if condition". if the user gives us unexpected variable, This if condition will appear. This is the GET method. There is no any SENT activity. Just get the web page. I will put my name as developer_name and 
         return render_template('index.html', developer_name='Rana', not_valid=False)
