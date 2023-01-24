@@ -1,16 +1,18 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: |
-  CloudFormation Template for Roman Numerals Converter Application.
+  CloudFormation template for roman numerals web app
+Parameters:
 
-# Parameters:
-  
+  KeyPair:
+    Description: Key Pair for EC2 Instance
+    Type: AWS::EC2::KeyPair::KeyName
 Resources:
   WebServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
-    Properties: 
+    Properties:
       GroupDescription: Enable HTTP and SSH for webserver
       GroupName: WebserverSecGrp
-      SecurityGroupIngress: 
+      SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
@@ -19,32 +21,32 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-
-  WebServer:
+  WebServerHost:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-0b5eea76982371e91
       InstanceType: t2.micro
-      KeyName: firstkey
-      SecurityGroupIds: 
-        - !Ref WebServerSecurityGroup
-      Tags: 
-        - Key: Name
-          Value: WebServer-Rana
-      UserData:
-        Fn::Base64:
-        |
-          #!/bin/bash
-          yum update -y
-          yum install python3 -y
-          pip3 install flask
-          yum install git -y
-          cd /home/ec2-user
-          wget -P templates https://raw.githubusercontent.com/ranazr/my-repository/main/Project-001-Roman-Numerals-Converter/templates/index.html
-          wget -P templates https://raw.githubusercontent.com/ranazr/my-repository/main/Project-001-Roman-Numerals-Converter/templates/result.html
-          wget https://raw.githubusercontent.com/ranazr/my-repository/main/Project-001-Roman-Numerals-Converter/app.py
-          python3 app.py   
-          yum install httpd -y
-          systemctl start httpd
-          systemctl enable httpd
-# Outputs: 
+      KeyName: !Ref KeyPair
+      SecurityGroupIds:
+      - !Ref WebServerSecurityGroup
+      Tags:
+      - Key: Name
+        Value: WebServer
+      UserData: "String"
+        # Fn::Base64:
+        # |
+        #   #!/bin/bash
+        #   yum update -y
+        #   yum install python3 -y
+        #   pip3 install flask
+        #   yum install git -y
+        #   cd /home/ec2-user
+        #   wget -P templates https://raw.githubusercontent.com/ranazr/my-repository/main/Project-001-Roman-Numerals-Converter/templates/index.html
+        #   wget -P templates https://raw.githubusercontent.com/ranazr/my-repository/main/Project-001-Roman-Numerals-Converter/templates/result.html
+        #   wget https://raw.githubusercontent.com/ranazr/my-repository/main/Project-001-Roman-Numerals-Converter/app.py
+        #   python3 app.py   
+        #   yum install httpd -y
+        #   systemctl start httpd
+        #   systemctl enable httpd
+
+#Outputs:
