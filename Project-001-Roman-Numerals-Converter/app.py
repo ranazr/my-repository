@@ -40,7 +40,7 @@ def main_post():
         return render_template('index.html', developer_name='Rana', not_valid=False)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    #app.run(debug=True)
     app.run(host='0.0.0.0', port=80)
 
 #All the setup is done, We have application and we have templates. Lets start statement. Lets go ahead and check if it is running. 
