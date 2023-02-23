@@ -1,11 +1,11 @@
 import boto3
 
-# sts example
-# sts = boto3.client('sts')
+#sts example
+sts = boto3.client('sts')
 
-# response = sts.get_caller_identity()
+response = sts.get_caller_identity()
 
-# print(response)
+print(response)
 
 
 #s3 example
@@ -23,12 +23,12 @@ import boto3
 
 
 #another ec2 example
-ec2 = boto3.resource('ec2')
+#ec2 = boto3.resource('ec2')
 
-ec2.create_instances(
-    ImageId='ami-09d95fab7fff3776c',
-    MinCount=1,
-    MaxCount=2,
-    InstanceType='t2.micro'
-)
+# ec2.create_instances(
+#     ImageId='ami-09d95fab7fff3776c',
+#     MinCount=1,
+#     MaxCount=2,
+#     InstanceType='t2.micro'
+
 
